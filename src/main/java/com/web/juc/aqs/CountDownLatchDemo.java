@@ -1,4 +1,4 @@
-package com.web.concurrent;
+package com.web.juc.aqs;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -75,18 +75,15 @@ public class CountDownLatchDemo {
     private static void cyclicBarrier() throws Exception {
         CyclicBarrier cyclicBarrier = new CyclicBarrier(3) ;
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                LOGGER.info("thread run");
-                try {
-                    cyclicBarrier.await() ;
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                LOGGER.info("thread end do something");
+        new Thread(() -> {
+            LOGGER.info("thread run");
+            try {
+                cyclicBarrier.await() ;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
+            LOGGER.info("thread end do something");
         }).start();
 
         new Thread(new Runnable() {

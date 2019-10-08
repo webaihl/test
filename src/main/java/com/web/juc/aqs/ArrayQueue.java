@@ -1,4 +1,4 @@
-package com.web.concurrent;
+package com.web.juc.aqs;
 
 /**
  * @author web

@@ -1,6 +1,6 @@
 package com.web.thread;
 
-class threadDemo1 implements Runnable {
+class SyncTask implements Runnable {
     int ticket = 10;
 
     @Override
@@ -23,13 +23,13 @@ class threadDemo1 implements Runnable {
 public class ThreadImplementDemo {
 
     public static void main(String[] args) {
-        threadDemo1 threadDemo1 = new threadDemo1();
+        SyncTask threadDemo1 = new SyncTask();
         Thread t1 = new Thread(threadDemo1);
         Thread t2 = new Thread(threadDemo1);
         Thread t3 = new Thread(threadDemo1);
         t1.start();
         t2.start();
         t3.start(); // start()开启新线程时、会自动调用 run()，不必等待
-        // run方法体的代码执行。run方法不会开启新线程。
+                     // run方法体的代码执行。run方法不会开启新线程。
     }
 }

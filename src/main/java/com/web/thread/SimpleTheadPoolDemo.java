@@ -15,7 +15,7 @@ public class SimpleTheadPoolDemo {
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newCachedThreadPool();
         for (int i=0; i<10; i++){
-            executorService.execute(new task());
+            executorService.execute(new Task());
         }
 
         executorService.shutdown();
@@ -24,7 +24,7 @@ public class SimpleTheadPoolDemo {
 
 }
 
-class task implements Runnable{
+class Task implements Runnable{
 
     @Override
     public void run() {

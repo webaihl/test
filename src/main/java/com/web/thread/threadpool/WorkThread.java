@@ -2,7 +2,7 @@ package com.web.thread.threadpool;
 
 public class WorkThread implements Runnable {
 
-    private String flag = null;
+    private String flag;
 
     public WorkThread(String s) {
         this.flag = s;
@@ -25,7 +25,7 @@ public class WorkThread implements Runnable {
 
     @Override
     public String toString() {
-        return flag.toString();
+        return flag;
     }
 
 }

@@ -1,6 +1,4 @@
-package com.web.concurrent;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
+package com.web.juc;
 
 import java.text.SimpleDateFormat;
 import java.util.Random;

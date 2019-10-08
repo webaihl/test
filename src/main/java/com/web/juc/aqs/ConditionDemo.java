@@ -1,4 +1,4 @@
-package com.web.lock;
+package com.web.juc.aqs;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -9,22 +9,22 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author 96531
- * ReentrantLock+Condition??????? synchronized + wait+notify
+ * ReentrantLock+Condition 与 synchronized + wait+notify
  */
 class TaskQueue {
 
-    final Queue<String> queue = new LinkedList<>();
+    private final Queue<String> queue = new LinkedList<>();
 
-    final Lock lock = new ReentrantLock();
-    //?????lock????????
-    final Condition notEmpty = lock.newCondition();
+    private final Lock lock = new ReentrantLock();
+    //lock对象上新建Condition实例
+    private final Condition notEmpty = lock.newCondition();
 
 
     public String getTask() throws InterruptedException {
         lock.lock();
         try {
             while (this.queue.isEmpty()) {
-                //??????????
+                //Condition实例上的等待
                 notEmpty.await();
             }
             return queue.remove();
@@ -37,7 +37,7 @@ class TaskQueue {
         lock.lock();
         try {
             this.queue.add(name);
-            //??????????????е???????
+            //唤醒Condition实例上所有等待的锁
             notEmpty.signalAll();
         } finally {
             lock.unlock();
@@ -76,7 +76,7 @@ public class ConditionDemo {
 
     public static void main(String[] args) throws Exception {
         //TaskQueue taskQueue = new TaskQueue();
-        // ????????
+
         ArrayBlockingQueue<String> taskQueue = new ArrayBlockingQueue<>(10);
         WorkerThread worker = new WorkerThread(taskQueue);
         worker.start();

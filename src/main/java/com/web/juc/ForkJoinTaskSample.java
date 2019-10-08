@@ -1,10 +1,9 @@
-package com.web.lock;
-
-import org.omg.SendingContext.RunTime;
+package com.web.juc;
 
 import java.util.Random;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
+import java.util.concurrent.Future;
 import java.util.concurrent.RecursiveTask;
 
 class SumTask extends RecursiveTask<Long> {
@@ -65,15 +64,15 @@ public class ForkJoinTaskSample {
         System.out.println("Expected sum: " + expectedSum);
         // fork/join:
         //代入数组，
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        long startTime = System.currentTimeMillis();
+        Future<Long> res = forkJoinPool.submit(new SumTask(array, 0, array.length));
+        Long result = res.get();
 
-        //int poolSize = Runtime.getRuntime().availableProcessors();
-        //ForkJoinPool forkJoinPool = new ForkJoinPool(poolSize);
-        //Long res = forkJoinPool.invoke(new SumTask(array, 0, array.length));
-
-        ForkJoinTask<Long> task = new SumTask(array, 0, array.length);
+      /*  ForkJoinTask<Long> task = new SumTask(array, 0, array.length);
         long startTime = System.currentTimeMillis();
         //调用线程池计算，获取结果
-        Long result = ForkJoinPool.commonPool().invoke(task);
+        Long result = ForkJoinPool.commonPool().invoke(task);*/
         long endTime = System.currentTimeMillis();
         System.out.println("Fork/join sum: " + result + " in " + (endTime - startTime) + " ms.");
     }

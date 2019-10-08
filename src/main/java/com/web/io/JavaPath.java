@@ -6,15 +6,15 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
-public class RWPath {
+public class JavaPath {
 
     public static void main(String[] args) {
 
         String url = Thread.currentThread().getContextClassLoader().getResource("resource/test.txt").getPath();
 
-        System.out.println(RWPath.class.getResource("").getPath());//包所在的目录
-        System.out.println(RWPath.class.getResource("/").getPath());//classes目录
-        //System.out.println(RWPath.class.getResource("resource/test.txt").getPath());//null
+        System.out.println(JavaPath.class.getResource("").getPath());//包所在的目录
+        System.out.println(JavaPath.class.getResource("/").getPath());//classes目录
+        //System.out.println(JavaPath.class.getResource("resource/test.txt").getPath());//null
         System.out.println(Thread.currentThread().getContextClassLoader().getResource("").getPath());//classes目录 src
         //System.out.println(Thread.currentThread().getContextClassLoader().getResource("/").getPath());//null
         System.out.println(Thread.currentThread().getContextClassLoader().getResource("resource/test.txt").getPath());
