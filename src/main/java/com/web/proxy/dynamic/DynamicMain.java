@@ -1,7 +1,7 @@
 package com.web.proxy.dynamic;
 
-import com.web.proxy.simple.InterFace;
-import com.web.proxy.simple.RealObj;
+import com.web.proxy.jdk.InterFace;
+import com.web.proxy.jdk.RealObj;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;

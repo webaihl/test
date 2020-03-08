@@ -27,7 +27,7 @@ class AtomicDemoTest {
 }
 
 
-public class AmoticDemo {
+public class AtomicDemo {
     final static int LOOP = 1000000;
 
     public static void main(String[] args) throws InterruptedException {

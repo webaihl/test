@@ -15,24 +15,16 @@ public class SimpleTheadPoolDemo {
     public static void main(String[] args) {
         ExecutorService executorService = Executors.newCachedThreadPool();
         for (int i=0; i<10; i++){
-            executorService.execute(new Task());
+            executorService.execute(()->{
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(Thread.currentThread().getName());
+            });
         }
 
         executorService.shutdown();
-    }
-
-
-}
-
-class Task implements Runnable{
-
-    @Override
-    public void run() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println(Thread.currentThread().getName());
     }
 }
