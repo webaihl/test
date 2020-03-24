@@ -13,8 +13,8 @@ import javax.jms.*;
  */
 public class AppConsumer {
 
-    private static String URL = "tcp://127.0.0.1:61616";
-    private static String topicName = "topic-test";
+    private static final String URL = "tcp://127.0.0.1:61616";
+    private static final String TOPIC_NAME = "topic-test";
 
     public static void main(String[] args) throws JMSException {
         //1、创建ConnectionFactory
@@ -26,7 +26,7 @@ public class AppConsumer {
         //根据connection生成session
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         //4、创建目的地
-        Destination destination = session.createTopic(topicName);
+        Destination destination = session.createTopic(TOPIC_NAME);
         //5 创建消费者，绑定目的地
         MessageConsumer consumer = session.createConsumer(destination);
         //6、使用消费者获取消息

@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.lang.reflect.TypeVariable;
 
-public class GetMethodinfo {
+public class GetMethodInfo {
 	public static void printMethodInfo(Object obj) {
 		//得到传递类的 类类型
 		Class<Object> c = (Class<Object>) obj.getClass();
