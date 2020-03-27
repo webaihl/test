@@ -1,6 +1,8 @@
 package com.web.redis;
 
+import com.web.redis.redission.RedissionManager;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -16,6 +18,8 @@ import java.util.concurrent.TimeUnit;
 public class RedisDistributedLock {
     private static final String CLOSE_TASK_LOCK = "close_task_lock";
     private static final Integer lockTimeout = 5000;
+
+    private RedissionManager redissionManager = new RedissionManager();
 
     public void closeTask(){
         log.info("{} 进入任务...", Thread.currentThread().getName());
@@ -47,6 +51,28 @@ public class RedisDistributedLock {
 
     }
 
+    public void closeTaskV2(){
+        RLock lock = redissionManager.getRedisson().getLock(CLOSE_TASK_LOCK);
+        boolean getLock = false;
+        try {
+            // wait尽量为0。避免执行时间小于wait_time,导致重复拿到锁
+            if (getLock = lock.tryLock(0, 5, TimeUnit.SECONDS)){
+                log.info("Redission获取到分布式锁{},ThreadName: {}", CLOSE_TASK_LOCK, Thread.currentThread().getName());
+            }else {
+                log.info("Redission没有获取到分布式锁{},ThreadName: {}", CLOSE_TASK_LOCK, Thread.currentThread().getName());
+            }
+        } catch (InterruptedException e) {
+            log.error("Redission分布式锁获取异常", e);
+        }finally {
+            if (!getLock){
+                return;
+            }
+            lock.unlock();
+            log.info("Redission分布式锁释放成功！,ThreadName={}", Thread.currentThread().getName());
+        }
+
+    }
+
     private void close() {
         RedisSharedPoolUtil.expire(CLOSE_TASK_LOCK, lockTimeout);
         try {
@@ -61,20 +87,19 @@ public class RedisDistributedLock {
 
     public static void main(String[] args) {
        Thread t1 =  new Thread(()->{
-            new RedisDistributedLock().closeTask();
+            new RedisDistributedLock().closeTaskV2();
         },"A");
 
         Thread t2 =  new Thread(()->{
-            new RedisDistributedLock().closeTask();
+            new RedisDistributedLock().closeTaskV2();
         },"B");
 
         Thread t3 =  new Thread(()->{
-            new RedisDistributedLock().closeTask();
+            new RedisDistributedLock().closeTaskV2();
         },"C");
 
         t1.start();
         t2.start();
         t3.start();
-
     }
 }
