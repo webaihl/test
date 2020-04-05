@@ -6,6 +6,7 @@ import org.redisson.api.RLock;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 
 /**
  * @author web
@@ -86,20 +87,6 @@ public class RedisDistributedLock {
     }
 
     public static void main(String[] args) {
-       Thread t1 =  new Thread(()->{
-            new RedisDistributedLock().closeTaskV2();
-        },"A");
-
-        Thread t2 =  new Thread(()->{
-            new RedisDistributedLock().closeTaskV2();
-        },"B");
-
-        Thread t3 =  new Thread(()->{
-            new RedisDistributedLock().closeTaskV2();
-        },"C");
-
-        t1.start();
-        t2.start();
-        t3.start();
+        IntStream.range(0,3).forEach(e-> new Thread(()-> new RedisDistributedLock().closeTaskV2(),String.valueOf(e)).start());
     }
 }
