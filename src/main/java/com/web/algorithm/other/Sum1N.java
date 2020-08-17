@@ -10,12 +10,12 @@ package com.web.algorithm.other;
 public class Sum1N {
 
     public static int solution(int n, int s) {
-        boolean b = n > 0 && (s = solution(n - 1, s)) > 0;
+        boolean b = n - 1 > 0 && (s = solution(n - 1, s)) > 0;
         return s + n;
     }
 
     public static void main(String[] arg) {
-        int s = solution(100, 0);
+        int s = solution(2, 0);
         System.out.println(s);
     }
 }
