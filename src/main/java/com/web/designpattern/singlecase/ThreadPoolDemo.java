@@ -5,12 +5,12 @@ import java.util.concurrent.Executors;
 
 public class ThreadPoolDemo {
     public static void main(String[] args) {
-        ExecutorService eService = Executors.newSingleThreadExecutor();
-        for (int i = 0; i < 5; i++) {
+        ExecutorService eService = Executors.newFixedThreadPool(5);
+        for (int i = 0; i < 50; i++) {
             Runnable work = ()->{
                 for (int j = 0; j < 20; j++) {
                     System.out.println(j+" "+Thread.currentThread().getName() + "---"
-                            + SingleCase.getSingleCase().getDate());
+                            + InnerClassSingleton.getInstance().getDate());
                 }
             } ;
             eService.execute(work);

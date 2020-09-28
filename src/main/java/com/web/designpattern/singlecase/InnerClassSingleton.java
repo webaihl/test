@@ -9,7 +9,7 @@ public class InnerClassSingleton {
      *1、私有构造函数
      *2、静态内部类线程安全
      */
-    private Date date = new Date();
+    private final Date date = new Date();
 
     public Date getDate(){
         return date;
@@ -22,7 +22,7 @@ public class InnerClassSingleton {
     private InnerClassSingleton() {
     }
 
-    public static final InnerClassSingleton getInstance() {
+    public static InnerClassSingleton getInstance() {
         // return InnerClassSingleton.getInstance();
         return SingletonHolder.INSTANCE;
     }
