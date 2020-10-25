@@ -1,6 +1,5 @@
-package com.web.bobo;
+package com.web.bobo.arraylist;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
